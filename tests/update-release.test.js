@@ -60,7 +60,8 @@ describe('Update Release', () => {
       .mockReturnValueOnce('myBody')
       .mockReturnValueOnce('false')
       .mockReturnValueOnce('false')
-      .mockReturnValueOnce('false');
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('');
 
     await run();
 
@@ -81,7 +82,8 @@ describe('Update Release', () => {
       .mockReturnValueOnce('myBody')
       .mockReturnValueOnce('false')
       .mockReturnValueOnce('false')
-      .mockReturnValueOnce('true');
+      .mockReturnValueOnce('true')
+      .mockReturnValueOnce('');
 
     await run();
 
@@ -102,7 +104,8 @@ describe('Update Release', () => {
       .mockReturnValueOnce('myBody')
       .mockReturnValueOnce('false')
       .mockReturnValueOnce('false')
-      .mockReturnValueOnce('false');
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('');
 
     await run();
 
@@ -123,7 +126,8 @@ describe('Update Release', () => {
       .mockReturnValueOnce('myBody')
       .mockReturnValueOnce('false')
       .mockReturnValueOnce('false')
-      .mockReturnValueOnce('false');
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('');
 
     await run();
 
@@ -144,7 +148,8 @@ describe('Update Release', () => {
       .mockReturnValueOnce('')
       .mockReturnValueOnce('false')
       .mockReturnValueOnce('false')
-      .mockReturnValueOnce('false');
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('');
 
     await run();
 
@@ -165,7 +170,8 @@ describe('Update Release', () => {
       .mockReturnValueOnce('myBody')
       .mockReturnValueOnce('true')
       .mockReturnValueOnce('false')
-      .mockReturnValueOnce('false');
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('');
 
     await run();
 
@@ -186,7 +192,8 @@ describe('Update Release', () => {
       .mockReturnValueOnce('myBody')
       .mockReturnValueOnce('false')
       .mockReturnValueOnce('true')
-      .mockReturnValueOnce('false');
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('');
 
     await run();
 
@@ -207,7 +214,8 @@ describe('Update Release', () => {
       .mockReturnValueOnce('myBody')
       .mockReturnValueOnce('')
       .mockReturnValueOnce('false')
-      .mockReturnValueOnce('false');
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('');
 
     await run();
 
@@ -228,7 +236,8 @@ describe('Update Release', () => {
       .mockReturnValueOnce('myBody')
       .mockReturnValueOnce('false')
       .mockReturnValueOnce('')
-      .mockReturnValueOnce('false');
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('');
 
     await run();
 
@@ -238,6 +247,52 @@ describe('Update Release', () => {
       repo: 'repo',
       name: 'myRelease',
       body: 'myBody',
+      draft: false,
+      prerelease: false
+    });
+  });
+  test('Body path', async () => {
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('myRelease')
+      .mockReturnValueOnce('')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('test.md');
+    fs.readFileSync = jest.fn().mockReturnValueOnce('# test markdown\nThe markdown is great.');
+
+    await run();
+
+    expect(updateRelease).toHaveBeenCalledWith({
+      owner: 'owner',
+      release_id: 'releaseId',
+      repo: 'repo',
+      name: 'myRelease',
+      body: '# test markdown\nThe markdown is great.',
+      draft: false,
+      prerelease: false
+    });
+  });
+  test('is Append Body path', async () => {
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('myRelease')
+      .mockReturnValueOnce('')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('true')
+      .mockReturnValueOnce('test.md');
+    fs.readFileSync = jest.fn().mockReturnValueOnce('# test markdown\nThe markdown is great.');
+
+    await run();
+
+    expect(updateRelease).toHaveBeenCalledWith({
+      owner: 'owner',
+      release_id: 'releaseId',
+      repo: 'repo',
+      name: 'myRelease',
+      body: 'oldBody\n# test markdown\nThe markdown is great.',
       draft: false,
       prerelease: false
     });
