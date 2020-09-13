@@ -297,4 +297,27 @@ describe('Update Release', () => {
       prerelease: false
     });
   });
+  test('Body path with body text', async () => {
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('myRelease')
+      .mockReturnValueOnce('testBody')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('test.md');
+    fs.readFileSync = jest.fn().mockReturnValueOnce('# test markdown\nThe markdown is great.');
+
+    await run();
+
+    expect(updateRelease).toHaveBeenCalledWith({
+      owner: 'owner',
+      release_id: 'releaseId',
+      repo: 'repo',
+      name: 'myRelease',
+      body: '# test markdown\nThe markdown is great.',
+      draft: false,
+      prerelease: false
+    });
+  });
 });
