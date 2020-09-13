@@ -36,8 +36,10 @@ async function run() {
     const isAppendBody = core.getInput('isAppendBody', { required: false }) === 'true';
 
     let body;
-    if (isAppendBody !== '' && !!isAppendBody) {
+    if (isAppendBody !== '' && isAppendBody) {
       body = `${oldBody}\n${newBody}`;
+    } else {
+      body = newBody;
     }
     let name;
     if (newReleaseName !== '' && !!newReleaseName) {
@@ -45,6 +47,8 @@ async function run() {
     } else {
       name = oldName;
     }
+
+    console.log(body)
 
     const updateReleaseResponse = await github.repos.updateRelease({
       owner,
