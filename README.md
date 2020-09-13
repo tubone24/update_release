@@ -8,7 +8,7 @@ This GitHub Action (written in JavaScript) is to change the Body Text and Name o
 
 Create a workflow `.yml` file in your .github/workflows directory. 
 
-[An example workflow]() is available below. For more information, reference the GitHub Help Documentation for [Creating a workflow file](https://docs.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#creating-a-workflow-file).
+[An example workflow](https://github.com/tubone24/update_release#example-workflow---update-a-release) is available below. For more information, reference the GitHub Help Documentation for [Creating a workflow file](https://docs.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#creating-a-workflow-file).
 
 ### Inputs
 
