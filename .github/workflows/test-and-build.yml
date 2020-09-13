@@ -1,0 +1,35 @@
+name: Test and Build
+
+on:
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - 'v*' # version Tag push use release workflow
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install Dependencies
+        run: npm install
+      - name: Test and Build
+        run: npm run all
+      - name: Setup git
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        run: |
+          git config --local user.name GitHubActions
+          git remote set-url origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+      - name: Git push, tag, upload assets
+        run: |
+          git checkout master
+          git pull origin master
+          git add -A
+          DIFF=`git diff --cached --numstat | wc -l`
+          if [ $DIFF -eq 0 ]; then
+            exit 0
+          fi
+          git commit -am 'GitHub Actions commit' --allow-empty
+          git push origin master
