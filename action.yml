@@ -1,9 +1,37 @@
 name: 'Update Release'
 description: 'Update Release'
 author: 'tubone24'
+inputs:
+  release_name:
+    description: 'new release name'
+    required: false
+  body:
+    description: 'new body'
+    required: false
+  draft:
+    description: 'new draft'
+    required: false
+  prerelease:
+    description: 'new prerelease'
+    required: false
+  isAppendBody:
+    description: 'If true, append body text, If false, overwrite body text, default is true'
+    required: false
 outputs:
   id:
     description: 'The ID of the Release'
+  html_url:
+    description: 'The HTML url of the Release'
+  upload_url:
+    description: 'The upload url of the Release'
+  name:
+    description: 'The name of the Release'
+  body:
+    description: 'The body of the Release'
+  published_at:
+    description: 'The publish at of the Release'
+  tag_name:
+    description: 'The tag name of the Release'
 runs:
   using: 'node12'
   main: 'dist/index.js'
