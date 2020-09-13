@@ -17,6 +17,9 @@ inputs:
   isAppendBody:
     description: 'If true, append body text, If false, overwrite body text, default is false'
     required: false
+  body_path:
+    description: 'Path to file with new body text.'
+    required: false
 outputs:
   id:
     description: 'The ID of the Release'
