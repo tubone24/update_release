@@ -1,5 +1,8 @@
 # update_release (GitHub Release API)
 
+[![Actions Status](https://github.com/tubone24/update_release/workflows/Test%20and%20Build/badge.svg)](https://github.com/tubone24/update_release/actions)
+[![Coverage Status](https://coveralls.io/repos/github/tubone24/update_release/badge.svg?branch=master)](https://coveralls.io/github/tubone24/update_release?branch=master)
+
 This GitHub Action (written in JavaScript) is to change the Body Text and Name of an already created Release with using the GitHub Release API.
 
 ## Usage
