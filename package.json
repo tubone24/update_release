@@ -1,0 +1,44 @@
+{
+  "name": "update_release",
+  "version": "1.0.0",
+  "description": "Update release",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint \"src/**.js\" --fix",
+    "prepare": "ncc build src/main.js -o dist --source-map --license licenses.txt",
+    "test": "jest",
+    "all": "npm run lint && npm run prepare && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tubone24/update_release.git"
+  },
+  "keywords": [
+    "GitHub",
+    "Actions",
+    "JavaScript"
+  ],
+  "author": "tubone24",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tubone24/update_release/issues"
+  },
+  "homepage": "https://github.com/tubone24/update_release#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.5",
+    "@actions/github": "^2.2.0",
+    "@actions/exec": "^1.0.4"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.24.0",
+    "eslint": "^7.4.0",
+    "jest": "^26.1.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.6.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^2.7.0",
+    "eslint-plugin-react": "^7.12.4",
+    "prettier": "^1.16.4"
+  }
+}

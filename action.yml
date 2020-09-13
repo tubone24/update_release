@@ -1,0 +1,12 @@
+name: 'Update Release'
+description: 'Update Release'
+author: 'tubone24'
+outputs:
+  id:
+    description: 'The ID of the Release'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'tag'
+  color: 'green'
