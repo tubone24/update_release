@@ -3,16 +3,16 @@ description: 'Update GitHub Release'
 author: 'tubone24'
 inputs:
   release_name:
-    description: 'new release name'
+    description: 'new release name, if not, take over before name'
     required: false
   body:
-    description: 'new body'
+    description: 'new body text, if not, take over before text'
     required: false
   draft:
-    description: 'new draft'
+    description: 'new draft, if not, take over before draft'
     required: false
   prerelease:
-    description: 'new prerelease'
+    description: 'new prerelease, if not, take over prerelease'
     required: false
   isAppendBody:
     description: 'If true, append body text, If false, overwrite body text, default is false'
