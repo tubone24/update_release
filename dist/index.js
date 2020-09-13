@@ -25265,8 +25265,8 @@ async function run() {
 
     const newReleaseName = core.getInput('release_name', { required: false });
     const newBody = core.getInput('body', { required: false });
-    const newDraft = core.getInput('draft', { required: false }) === 'true';
-    const newPrerelease = core.getInput('prerelease', { required: false }) === 'true';
+    const newDraft = core.getInput('draft', { required: false });
+    const newPrerelease = core.getInput('prerelease', { required: false });
     const isAppendBody = core.getInput('isAppendBody', { required: false }) === 'true';
 
     let body;
@@ -25281,8 +25281,18 @@ async function run() {
     } else {
       name = oldName;
     }
-
-    console.log(body)
+    let prerelease;
+    if (newPrerelease !== '' && !!newPrerelease) {
+      prerelease = newPrerelease === 'true';
+    } else {
+      prerelease = oldPrerelease;
+    }
+    let draft;
+    if (newDraft !== '' && !!newDraft) {
+      draft = newDraft === 'true';
+    } else {
+      draft = oldDraft;
+    }
 
     const updateReleaseResponse = await github.repos.updateRelease({
       owner,
@@ -25290,8 +25300,8 @@ async function run() {
       repo,
       body,
       name,
-      draft: newDraft,
-      prerelease: newPrerelease
+      draft,
+      prerelease,
     });
 
     const {
