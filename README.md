@@ -2,16 +2,31 @@
 
 [![Actions Status](https://github.com/tubone24/update_release/workflows/Test%20and%20Build/badge.svg)](https://github.com/tubone24/update_release/actions)
 [![Coverage Status](https://coveralls.io/repos/github/tubone24/update_release/badge.svg?branch=master)](https://coveralls.io/github/tubone24/update_release?branch=master)
+[![license](https://img.shields.io/github/license/tubone24/update_release.svg)](LICENSE)
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 This GitHub Action (written in JavaScript) is to change the Body Text and Name of an already created Release with using the GitHub Release API.
 
-## Usage
+## Table of Contents
+
+- [Background](#background)
+- [Install](#install)
+- [Usage](#usage)
+- [Demos](#demos)
+- [Test](#Test)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Install
 
 ### Pre-requisites
 
 Create a workflow `.yml` file in your .github/workflows directory. 
 
 [An example workflow](https://github.com/tubone24/update_release#example-workflow---update-a-release) is available below. For more information, reference the GitHub Help Documentation for [Creating a workflow file](https://docs.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#creating-a-workflow-file).
+
+## Usage
 
 ### Inputs
 
@@ -94,3 +109,34 @@ jobs:
 `on-release-created` is a event to create a release and you can get release id on the actions. Also changed body text.
 
 This uses the GITHUB_TOKEN provided by the [virtual environment](https://docs.github.com/en/actions/reference/virtual-environments-for-github-hosted-runners#github_token-secret), so no new token is needed.
+
+## Demos
+
+See the repo:
+
+<https://github.com/tubone24/post_twitter_on_work>
+
+## Test
+
+If you modify this codes, run unit test with `jest`.
+
+```
+npm test
+```
+
+Also, this repo is integrated with GitHub Action.
+
+So, Run CI test, if you write test.
+
+
+## Contributing
+
+See [the contributing file](CONTRIBUTING.md)!
+
+PRs accepted.
+
+Small note: If editing the Readme, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+
+## License
+
+[MIT © tubone.](LICENSE)
