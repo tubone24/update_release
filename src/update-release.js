@@ -14,7 +14,15 @@ async function run() {
     });
 
     const {
-      data: { id: oldReleaseId, html_url: oldHtmlUrl, upload_url: oldUploadUrl, body: oldBody, draft: oldDraft, name: oldName, prerelease: oldPrerelease }
+      data: {
+        id: oldReleaseId,
+        html_url: oldHtmlUrl,
+        upload_url: oldUploadUrl,
+        body: oldBody,
+        draft: oldDraft,
+        name: oldName,
+        prerelease: oldPrerelease
+      }
     } = getReleaseResponse;
 
     console.log(`Got release info: '${oldReleaseId}', ${oldName}, '${oldHtmlUrl}', '${oldUploadUrl},'`);
@@ -42,8 +50,8 @@ async function run() {
       owner,
       release_id: oldReleaseId,
       repo,
-      body: body,
-      name: name,
+      body,
+      name,
       draft: newDraft,
       prerelease: newPrerelease
     });
