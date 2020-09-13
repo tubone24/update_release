@@ -320,4 +320,54 @@ describe('Update Release', () => {
       prerelease: false
     });
   });
+  test('invalid body path', async () => {
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('myRelease')
+      .mockReturnValueOnce('testBody')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('invalid.md');
+
+    fs.readFileSync.mockImplementation(() => {
+      throw new Error('Error read file');
+    });
+
+    core.setOutput = jest.fn();
+
+    core.setFailed = jest.fn();
+
+    await run();
+
+    expect(updateRelease).not.toHaveBeenCalled();
+    expect(core.setFailed).toHaveBeenCalledWith('Error read file');
+    expect(core.setOutput).toHaveBeenCalledTimes(0);
+  });
+  test('error update release', async () => {
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('myRelease')
+      .mockReturnValueOnce('testBody')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('invalid.md');
+
+    fs.readFileSync = jest.fn().mockReturnValueOnce('# test markdown\nThe markdown is great.');
+    updateRelease.mockRestore();
+    updateRelease.mockImplementation(() => {
+      throw new Error('Error update release');
+    });
+
+    core.setOutput = jest.fn();
+
+    core.setFailed = jest.fn();
+
+    await run();
+
+    expect(updateRelease).toHaveBeenCalled();
+    expect(core.setFailed).toHaveBeenCalledWith('Error update release');
+    expect(core.setOutput).toHaveBeenCalledTimes(0);
+  });
 });

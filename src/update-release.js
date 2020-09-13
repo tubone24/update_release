@@ -43,6 +43,7 @@ async function run() {
         bodyFileContent = fs.readFileSync(newBodyPath, { encoding: 'utf8' });
       } catch (error) {
         core.setFailed(error.message);
+        return
       }
       if (isAppendBody !== '' && !!isAppendBody) {
         bodyFileContent = `${oldBody}\n${bodyFileContent}`;
