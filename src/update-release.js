@@ -45,7 +45,7 @@ async function run() {
         core.setFailed(error.message);
       }
       if (isAppendBody !== '' && !!isAppendBody) {
-        bodyFileContent = `${oldBody}\n${bodyFileContent}`
+        bodyFileContent = `${oldBody}\n${bodyFileContent}`;
       }
     }
     let body;

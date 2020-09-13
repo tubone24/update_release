@@ -25234,6 +25234,7 @@ if (require.main === require.cache[eval('__filename')]) {
 
 const core = __webpack_require__(2186);
 const { GitHub, context } = __webpack_require__(5438);
+const fs = __webpack_require__(5747);
 
 async function run() {
   try {
@@ -25268,7 +25269,19 @@ async function run() {
     const newDraft = core.getInput('draft', { required: false });
     const newPrerelease = core.getInput('prerelease', { required: false });
     const isAppendBody = core.getInput('isAppendBody', { required: false }) === 'true';
+    const newBodyPath = core.getInput('body_path', { required: false });
 
+    let bodyFileContent = null;
+    if (newBodyPath !== '' && !!newBodyPath) {
+      try {
+        bodyFileContent = fs.readFileSync(newBodyPath, { encoding: 'utf8' });
+      } catch (error) {
+        core.setFailed(error.message);
+      }
+      if (isAppendBody !== '' && !!isAppendBody) {
+        bodyFileContent = `${oldBody}\n${bodyFileContent}`;
+      }
+    }
     let body;
     if (newBody === '') {
       body = oldBody;
@@ -25301,7 +25314,7 @@ async function run() {
       owner,
       release_id: oldReleaseId,
       repo,
-      body,
+      body: bodyFileContent || body,
       name,
       draft,
       prerelease
