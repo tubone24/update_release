@@ -1,5 +1,5 @@
-name: 'Update Release'
-description: 'Update Release'
+name: 'Update GitHub Release'
+description: 'Update GitHub Release'
 author: 'tubone24'
 outputs:
   id:
