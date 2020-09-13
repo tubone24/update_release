@@ -14,41 +14,56 @@ async function run() {
     });
 
     const {
-      data: { id: releaseId, html_url: htmlUrl, upload_url: uploadUrl, body, draft, name, prerelease }
+      data: { id: oldReleaseId, html_url: oldHtmlUrl, upload_url: oldUploadUrl, body: oldBody, draft: oldDraft, name: oldName, prerelease: oldPrerelease }
     } = getReleaseResponse;
 
-    console.log(`Got release info: '${releaseId}', ${name}, '${htmlUrl}', '${uploadUrl},'`);
-    console.log(`Body: ${body}`);
-    console.log(`Draft: ${draft}, Prerelease: ${prerelease}`);
+    console.log(`Got release info: '${oldReleaseId}', ${oldName}, '${oldHtmlUrl}', '${oldUploadUrl},'`);
+    console.log(`Body: ${oldBody}`);
+    console.log(`Draft: ${oldDraft}, Prerelease: ${oldPrerelease}`);
 
     const newReleaseName = core.getInput('release_name', { required: false });
-    let newBody = core.getInput('body', { required: false });
+    const newBody = core.getInput('body', { required: false });
     const newDraft = core.getInput('draft', { required: false }) === 'true';
     const newPrerelease = core.getInput('prerelease', { required: false }) === 'true';
     const isAppendBody = core.getInput('isAppendBody', { required: false }) === 'true';
 
+    let body;
     if (isAppendBody !== '' && !!isAppendBody) {
-      newBody = `${body}\n${newBody}`;
+      body = `${oldBody}\n${newBody}`;
     }
-    let newName;
+    let name;
     if (newReleaseName !== '' && !!newReleaseName) {
-      newName = newReleaseName;
+      name = newReleaseName;
     } else {
-      newName = name;
+      name = oldName;
     }
 
     const updateReleaseResponse = await github.repos.updateRelease({
       owner,
-      release_id: releaseId,
+      release_id: oldReleaseId,
       repo,
-      body: newBody,
-      name: newName,
+      body: body,
+      name: name,
       draft: newDraft,
       prerelease: newPrerelease
     });
-    core.setOutput('id', releaseId.toString());
-    core.setOutput('html_url', htmlUrl);
-    core.setOutput('upload_url', uploadUrl);
+
+    const {
+      data: {
+        id: updatedReleaseId,
+        body: updatedBody,
+        upload_url: updatedUploadUrl,
+        html_url: updatedHtmlUrl,
+        name: updatedReleaseName,
+        published_at: updatedPublishAt
+      }
+    } = updateReleaseResponse;
+    core.setOutput('id', updatedReleaseId.toString());
+    core.setOutput('html_url', updatedHtmlUrl);
+    core.setOutput('upload_url', updatedUploadUrl);
+    core.setOutput('name', updatedReleaseName);
+    core.setOutput('body', updatedBody);
+    core.setOutput('published_at', updatedPublishAt);
     core.setOutput('tag_name', tag);
   } catch (error) {
     console.log(error);

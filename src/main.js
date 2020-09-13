@@ -2,7 +2,7 @@ const run = require('./update-release');
 
 async function main() {
   try {
-    start();
+    run();
   } catch (error) {
     core.setFailed(error.message);
   }
