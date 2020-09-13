@@ -74,4 +74,172 @@ describe('Update Release', () => {
       prerelease: false
     });
   });
+  test('isAppend body text', async () => {
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('myRelease')
+      .mockReturnValueOnce('myBody')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('true');
+
+    await run();
+
+    expect(updateRelease).toHaveBeenCalledWith({
+      owner: 'owner',
+      release_id: 'releaseId',
+      repo: 'repo',
+      name: 'myRelease',
+      body: 'oldBody\nmyBody',
+      draft: false,
+      prerelease: false
+    });
+  });
+  test('isNotAppend body text', async () => {
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('myRelease')
+      .mockReturnValueOnce('myBody')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false');
+
+    await run();
+
+    expect(updateRelease).toHaveBeenCalledWith({
+      owner: 'owner',
+      release_id: 'releaseId',
+      repo: 'repo',
+      name: 'myRelease',
+      body: 'myBody',
+      draft: false,
+      prerelease: false
+    });
+  });
+  test('Not Change release Name', async () => {
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('')
+      .mockReturnValueOnce('myBody')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false');
+
+    await run();
+
+    expect(updateRelease).toHaveBeenCalledWith({
+      owner: 'owner',
+      release_id: 'releaseId',
+      repo: 'repo',
+      name: 'oldName',
+      body: 'myBody',
+      draft: false,
+      prerelease: false
+    });
+  });
+  test('Not Change body', async () => {
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('myRelease')
+      .mockReturnValueOnce('')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false');
+
+    await run();
+
+    expect(updateRelease).toHaveBeenCalledWith({
+      owner: 'owner',
+      release_id: 'releaseId',
+      repo: 'repo',
+      name: 'myRelease',
+      body: 'oldBody',
+      draft: false,
+      prerelease: false
+    });
+  });
+  test('Change draft', async () => {
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('myRelease')
+      .mockReturnValueOnce('myBody')
+      .mockReturnValueOnce('true')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false');
+
+    await run();
+
+    expect(updateRelease).toHaveBeenCalledWith({
+      owner: 'owner',
+      release_id: 'releaseId',
+      repo: 'repo',
+      name: 'myRelease',
+      body: 'myBody',
+      draft: true,
+      prerelease: false
+    });
+  });
+  test('Change prerelease', async () => {
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('myRelease')
+      .mockReturnValueOnce('myBody')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('true')
+      .mockReturnValueOnce('false');
+
+    await run();
+
+    expect(updateRelease).toHaveBeenCalledWith({
+      owner: 'owner',
+      release_id: 'releaseId',
+      repo: 'repo',
+      name: 'myRelease',
+      body: 'myBody',
+      draft: false,
+      prerelease: true
+    });
+  });
+  test('Not Change draft', async () => {
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('myRelease')
+      .mockReturnValueOnce('myBody')
+      .mockReturnValueOnce('')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('false');
+
+    await run();
+
+    expect(updateRelease).toHaveBeenCalledWith({
+      owner: 'owner',
+      release_id: 'releaseId',
+      repo: 'repo',
+      name: 'myRelease',
+      body: 'myBody',
+      draft: false,
+      prerelease: false
+    });
+  });
+  test('Not Change prerelease', async () => {
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('myRelease')
+      .mockReturnValueOnce('myBody')
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('')
+      .mockReturnValueOnce('false');
+
+    await run();
+
+    expect(updateRelease).toHaveBeenCalledWith({
+      owner: 'owner',
+      release_id: 'releaseId',
+      repo: 'repo',
+      name: 'myRelease',
+      body: 'myBody',
+      draft: false,
+      prerelease: false
+    });
+  });
 });

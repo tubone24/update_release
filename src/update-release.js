@@ -36,11 +36,14 @@ async function run() {
     const isAppendBody = core.getInput('isAppendBody', { required: false }) === 'true';
 
     let body;
-    if (isAppendBody !== '' && isAppendBody) {
+    if (newBody === '') {
+      body = oldBody;
+    } else if (isAppendBody !== '' && !!isAppendBody) {
       body = `${oldBody}\n${newBody}`;
     } else {
       body = newBody;
     }
+
     let name;
     if (newReleaseName !== '' && !!newReleaseName) {
       name = newReleaseName;
@@ -67,7 +70,7 @@ async function run() {
       body,
       name,
       draft,
-      prerelease,
+      prerelease
     });
 
     const {
