@@ -10,6 +10,133 @@ module.exports = JSON.parse("{\"_from\":\"@octokit/rest@^16.43.1\",\"_id\":\"@oc
 
 /***/ }),
 
+/***/ 3109:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+// @ts-ignore
+const update_release_1 = __webpack_require__(1003);
+if (require.main === require.cache[eval('__filename')]) {
+    update_release_1.run();
+}
+
+
+/***/ }),
+
+/***/ 1003:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core_1 = __webpack_require__(2186);
+const github_1 = __webpack_require__(5438);
+const fs_1 = __webpack_require__(5747);
+// @ts-ignore
+const run = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const github = new github_1.GitHub(process.env.GITHUB_TOKEN);
+        const { owner, repo } = github_1.context.repo;
+        const tagName = github_1.context.ref;
+        const tag = tagName.replace('refs/tags/', '');
+        const getReleaseResponse = yield github.repos.getReleaseByTag({
+            owner,
+            repo,
+            tag
+        });
+        const { data: { id: oldReleaseId, html_url: oldHtmlUrl, upload_url: oldUploadUrl, body: oldBody, draft: oldDraft, name: oldName, prerelease: oldPrerelease } } = getReleaseResponse;
+        console.log(`Got release info: '${oldReleaseId}', ${oldName}, '${oldHtmlUrl}', '${oldUploadUrl},'`);
+        console.log(`Body: ${oldBody}`);
+        console.log(`Draft: ${oldDraft}, Prerelease: ${oldPrerelease}`);
+        const newReleaseName = core_1.getInput('release_name', { required: false });
+        const newBody = core_1.getInput('body', { required: false });
+        const newDraft = core_1.getInput('draft', { required: false });
+        const newPrerelease = core_1.getInput('prerelease', { required: false });
+        const isAppendBody = core_1.getInput('isAppendBody', { required: false }) === 'true';
+        const newBodyPath = core_1.getInput('body_path', { required: false });
+        let bodyFileContent = null;
+        if (newBodyPath !== '' && !!newBodyPath) {
+            try {
+                bodyFileContent = fs_1.readFileSync(newBodyPath, { encoding: 'utf8' });
+            }
+            catch (error) {
+                core_1.setFailed(error.message);
+                return;
+            }
+            if (isAppendBody) {
+                bodyFileContent = `${oldBody}\n${bodyFileContent}`;
+            }
+        }
+        let body;
+        if (newBody === '') {
+            body = oldBody;
+        }
+        else if (isAppendBody) {
+            body = `${oldBody}\n${newBody}`;
+        }
+        else {
+            body = newBody;
+        }
+        let name;
+        if (newReleaseName !== '' && !!newReleaseName) {
+            name = newReleaseName;
+        }
+        else {
+            name = oldName;
+        }
+        let prerelease;
+        if (newPrerelease !== '' && !!newPrerelease) {
+            prerelease = newPrerelease === 'true';
+        }
+        else {
+            prerelease = oldPrerelease;
+        }
+        let draft;
+        if (newDraft !== '' && !!newDraft) {
+            draft = newDraft === 'true';
+        }
+        else {
+            draft = oldDraft;
+        }
+        const updateReleaseResponse = yield github.repos.updateRelease({
+            owner,
+            release_id: oldReleaseId,
+            repo,
+            body: bodyFileContent || body,
+            name,
+            draft,
+            prerelease
+        });
+        const { data: { id: updatedReleaseId, body: updatedBody, upload_url: updatedUploadUrl, html_url: updatedHtmlUrl, name: updatedReleaseName, published_at: updatedPublishAt } } = updateReleaseResponse;
+        core_1.setOutput('id', updatedReleaseId.toString());
+        core_1.setOutput('html_url', updatedHtmlUrl);
+        core_1.setOutput('upload_url', updatedUploadUrl);
+        core_1.setOutput('name', updatedReleaseName);
+        core_1.setOutput('body', updatedBody);
+        core_1.setOutput('published_at', updatedPublishAt);
+        core_1.setOutput('tag_name', tag);
+    }
+    catch (error) {
+        console.log(error);
+        core_1.setFailed(error.message);
+    }
+});
+module.exports = run;
+
+
+/***/ }),
+
 /***/ 7351:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -25217,138 +25344,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 1713:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-const run = __webpack_require__(1962);
-
-if (require.main === require.cache[eval('__filename')]) {
-  run();
-}
-
-
-/***/ }),
-
-/***/ 1962:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-const core = __webpack_require__(2186);
-const { GitHub, context } = __webpack_require__(5438);
-const fs = __webpack_require__(5747);
-
-async function run() {
-  try {
-    const github = new GitHub(process.env.GITHUB_TOKEN);
-    const { owner, repo } = context.repo;
-    const tagName = context.ref;
-    const tag = tagName.replace('refs/tags/', '');
-    const getReleaseResponse = await github.repos.getReleaseByTag({
-      owner,
-      repo,
-      tag
-    });
-
-    const {
-      data: {
-        id: oldReleaseId,
-        html_url: oldHtmlUrl,
-        upload_url: oldUploadUrl,
-        body: oldBody,
-        draft: oldDraft,
-        name: oldName,
-        prerelease: oldPrerelease
-      }
-    } = getReleaseResponse;
-
-    console.log(`Got release info: '${oldReleaseId}', ${oldName}, '${oldHtmlUrl}', '${oldUploadUrl},'`);
-    console.log(`Body: ${oldBody}`);
-    console.log(`Draft: ${oldDraft}, Prerelease: ${oldPrerelease}`);
-
-    const newReleaseName = core.getInput('release_name', { required: false });
-    const newBody = core.getInput('body', { required: false });
-    const newDraft = core.getInput('draft', { required: false });
-    const newPrerelease = core.getInput('prerelease', { required: false });
-    const isAppendBody = core.getInput('isAppendBody', { required: false }) === 'true';
-    const newBodyPath = core.getInput('body_path', { required: false });
-
-    let bodyFileContent = null;
-    if (newBodyPath !== '' && !!newBodyPath) {
-      try {
-        bodyFileContent = fs.readFileSync(newBodyPath, { encoding: 'utf8' });
-      } catch (error) {
-        core.setFailed(error.message);
-        return;
-      }
-      if (isAppendBody !== '' && !!isAppendBody) {
-        bodyFileContent = `${oldBody}\n${bodyFileContent}`;
-      }
-    }
-    let body;
-    if (newBody === '') {
-      body = oldBody;
-    } else if (isAppendBody !== '' && !!isAppendBody) {
-      body = `${oldBody}\n${newBody}`;
-    } else {
-      body = newBody;
-    }
-
-    let name;
-    if (newReleaseName !== '' && !!newReleaseName) {
-      name = newReleaseName;
-    } else {
-      name = oldName;
-    }
-    let prerelease;
-    if (newPrerelease !== '' && !!newPrerelease) {
-      prerelease = newPrerelease === 'true';
-    } else {
-      prerelease = oldPrerelease;
-    }
-    let draft;
-    if (newDraft !== '' && !!newDraft) {
-      draft = newDraft === 'true';
-    } else {
-      draft = oldDraft;
-    }
-
-    const updateReleaseResponse = await github.repos.updateRelease({
-      owner,
-      release_id: oldReleaseId,
-      repo,
-      body: bodyFileContent || body,
-      name,
-      draft,
-      prerelease
-    });
-
-    const {
-      data: {
-        id: updatedReleaseId,
-        body: updatedBody,
-        upload_url: updatedUploadUrl,
-        html_url: updatedHtmlUrl,
-        name: updatedReleaseName,
-        published_at: updatedPublishAt
-      }
-    } = updateReleaseResponse;
-    core.setOutput('id', updatedReleaseId.toString());
-    core.setOutput('html_url', updatedHtmlUrl);
-    core.setOutput('upload_url', updatedUploadUrl);
-    core.setOutput('name', updatedReleaseName);
-    core.setOutput('body', updatedBody);
-    core.setOutput('published_at', updatedPublishAt);
-    core.setOutput('tag_name', tag);
-  } catch (error) {
-    console.log(error);
-    core.setFailed(error.message);
-  }
-}
-
-module.exports = run;
-
-
-/***/ }),
-
 /***/ 2877:
 /***/ ((module) => {
 
@@ -25507,7 +25502,7 @@ module.exports = require("zlib");
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(1713);
+/******/ 	return __webpack_require__(3109);
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
