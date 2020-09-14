@@ -1,4 +1,4 @@
-import {getInput, setFailed, setOutput} from '@actions/core'
+import {getInput, setFailed, setOutput, info} from '@actions/core'
 import {GitHub, context} from '@actions/github'
 import {readFileSync} from 'fs'
 
@@ -26,11 +26,11 @@ export const run = async (): Promise<void> => {
       }
     } = getReleaseResponse
 
-    console.log(
+    info(
       `Got release info: '${oldReleaseId}', ${oldName}, '${oldHtmlUrl}', '${oldUploadUrl},'`
     )
-    console.log(`Body: ${oldBody}`)
-    console.log(`Draft: ${oldDraft}, Prerelease: ${oldPrerelease}`)
+    info(`Body: ${oldBody}`)
+    info(`Draft: ${oldDraft}, Prerelease: ${oldPrerelease}`)
 
     const newReleaseName = getInput('release_name', {required: false})
     const newBody = getInput('body', {required: false})
@@ -108,7 +108,6 @@ export const run = async (): Promise<void> => {
     setOutput('published_at', updatedPublishAt)
     setOutput('tag_name', tag)
   } catch (error) {
-    console.log(error)
     setFailed(error.message)
   }
 }
