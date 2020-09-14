@@ -14,7 +14,7 @@ inputs:
   prerelease:
     description: 'new prerelease, if not, take over prerelease'
     required: false
-  isAppendBody:
+  is_append_body:
     description: 'If true, append body text, If false, overwrite body text, default is false'
     required: false
   body_path:
