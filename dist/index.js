@@ -55,9 +55,9 @@ exports.run = () => __awaiter(void 0, void 0, void 0, function* () {
             tag
         });
         const { data: { id: oldReleaseId, html_url: oldHtmlUrl, upload_url: oldUploadUrl, body: oldBody, draft: oldDraft, name: oldName, prerelease: oldPrerelease } } = getReleaseResponse;
-        console.log(`Got release info: '${oldReleaseId}', ${oldName}, '${oldHtmlUrl}', '${oldUploadUrl},'`);
-        console.log(`Body: ${oldBody}`);
-        console.log(`Draft: ${oldDraft}, Prerelease: ${oldPrerelease}`);
+        core_1.info(`Got release info: '${oldReleaseId}', ${oldName}, '${oldHtmlUrl}', '${oldUploadUrl},'`);
+        core_1.info(`Body: ${oldBody}`);
+        core_1.info(`Draft: ${oldDraft}, Prerelease: ${oldPrerelease}`);
         const newReleaseName = core_1.getInput('release_name', { required: false });
         const newBody = core_1.getInput('body', { required: false });
         const newDraft = core_1.getInput('draft', { required: false });
@@ -127,7 +127,6 @@ exports.run = () => __awaiter(void 0, void 0, void 0, function* () {
         core_1.setOutput('tag_name', tag);
     }
     catch (error) {
-        console.log(error);
         core_1.setFailed(error.message);
     }
 });
