@@ -36,7 +36,8 @@ export const run = async (): Promise<void> => {
     const newBody = getInput('body', {required: false})
     const newDraft = getInput('draft', {required: false})
     const newPrerelease = getInput('prerelease', {required: false})
-    const isAppendBody = getInput('is_append_body', {required: false}) === 'true'
+    const isAppendBody =
+      getInput('is_append_body', {required: false}) === 'true'
     const newBodyPath = getInput('body_path', {required: false})
 
     let bodyFileContent = null
