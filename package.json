@@ -2,12 +2,13 @@
   "name": "update_release",
   "version": "1.0.0",
   "description": "Update release",
-  "main": "index.js",
+  "main": "lib/main.js",
   "scripts": {
-    "lint": "eslint \"src/**.js\" --fix",
-    "prepare": "ncc build src/main.js -o dist --source-map --license licenses.txt",
+    "build": "tsc",
+    "lint": "eslint \"src/**.ts\" --fix",
+    "prepare": "ncc build lib/main.js -o dist --source-map --license licenses.txt",
     "test": "jest --coverage",
-    "all": "npm run lint && npm run prepare && npm run test"
+    "all": "npm run build && npm run lint && npm run prepare && npm run test"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,9 @@
   },
   "devDependencies": {
     "@vercel/ncc": "^0.24.0",
+    "@types/jest": "^26.0.10",
+    "@types/node": "^14.10.0",
+    "@typescript-eslint/parser": "^3.10.1",
     "eslint": "^7.4.0",
     "jest": "^24.8.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -39,6 +43,11 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^2.7.0",
     "eslint-plugin-react": "^7.12.4",
-    "prettier": "^1.16.4"
+    "eslint-plugin-github": "^4.1.1",
+    "eslint-plugin-jest": "^23.20.0",
+    "prettier": "^1.16.4",
+    "jest-circus": "^26.4.2",
+    "ts-jest": "^24.3.0",
+    "typescript": "^4.0.2"
   }
 }

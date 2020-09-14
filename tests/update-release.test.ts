@@ -5,7 +5,7 @@ jest.mock('fs');
 const core = require('@actions/core');
 const { GitHub, context } = require('@actions/github');
 const fs = require('fs');
-const run = require('../src/update-release.js');
+const run = require('../src/update-release.ts');
 
 /* eslint-disable no-undef */
 describe('Update Release', () => {
