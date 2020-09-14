@@ -40,7 +40,7 @@ Change GitHub Releases, if you set the inputs.
   - If If this item is set, the draft is overridden.
 - prerelease
   - If If this item is set, the prerelease is overridden.
-- isAppendBody
+- is_append_body
   - If true, append body text on old one.
 - body_path
   - Path to file with new body text.
