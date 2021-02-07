@@ -1,5 +1,6 @@
 # update_release (GitHub Release API)
 
+[![Action Marketplace][release-badge]][marketplace]
 [![Actions Status](https://github.com/tubone24/update_release/workflows/Test%20and%20Build/badge.svg)](https://github.com/tubone24/update_release/actions)
 [![Coverage Status](https://coveralls.io/repos/github/tubone24/update_release/badge.svg?branch=master)](https://coveralls.io/github/tubone24/update_release?branch=master)
 [![license](https://img.shields.io/github/license/tubone24/update_release.svg)](LICENSE)
