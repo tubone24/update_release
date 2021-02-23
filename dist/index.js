@@ -43,7 +43,7 @@ exports.run = void 0;
 const core_1 = __webpack_require__(2186);
 const github_1 = __webpack_require__(5438);
 const fs_1 = __webpack_require__(5747);
-exports.run = () => __awaiter(void 0, void 0, void 0, function* () {
+const run = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const github = new github_1.GitHub(process.env.GITHUB_TOKEN);
         const { owner, repo } = github_1.context.repo;
@@ -130,6 +130,7 @@ exports.run = () => __awaiter(void 0, void 0, void 0, function* () {
         core_1.setFailed(error.message);
     }
 });
+exports.run = run;
 
 
 /***/ }),
