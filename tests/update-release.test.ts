@@ -53,6 +53,26 @@ describe('Update Release', () => {
     GitHub.mockImplementation(() => github);
   });
 
+  test('Ref tag is used', async () => {
+    await run();
+
+    expect(getReleaseByTag).toHaveBeenCalledWith({
+      owner: 'owner',
+      repo: 'repo',
+      tag: 'v1.0.0'
+    });
+  });
+  test('Custom tag is used', async () => {
+    process.env.TAG_NAME = "v3.0.0";
+
+    await run();
+
+    expect(getReleaseByTag).toHaveBeenCalledWith({
+      owner: 'owner',
+      repo: 'repo',
+      tag: 'v3.0.0'
+    });
+  });
   test('Update release endpoint is called', async () => {
     core.getInput = jest
       .fn()

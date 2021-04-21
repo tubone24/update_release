@@ -6,7 +6,7 @@ export const run = async (): Promise<void> => {
   try {
     const github = new GitHub(process.env.GITHUB_TOKEN)
     const {owner, repo} = context.repo
-    const tagName = context.ref
+    const tagName = process.env.TAG_NAME ?? context.ref
     const tag = tagName.replace('refs/tags/', '')
     const getReleaseResponse = await github.repos.getReleaseByTag({
       owner,

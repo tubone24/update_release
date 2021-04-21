@@ -34,13 +34,13 @@ Create a workflow `.yml` file in your .github/workflows directory.
 Change GitHub Releases, if you set the inputs. 
 
 - release_name
-  - If If this item is set, the release name is overridden.
+  - If this item is set, the release name is overridden.
 - body
-  - If If this item is set, the body text is overridden.
+  - If this item is set, the body text is overridden.
 - draft
-  - If If this item is set, the draft is overridden.
+  - If this item is set, the draft is overridden.
 - prerelease
-  - If If this item is set, the prerelease is overridden.
+  - If this item is set, the prerelease is overridden.
 - is_append_body
   - If true, append body text on old one.
 - body_path
@@ -53,6 +53,12 @@ Change GitHub Releases, if you set the inputs.
   - The URL users can navigate to in order to view the release. i.e. https://github.com/octocat/Hello-World/releases/v1.0.0
 - upload_url
   - The URL for uploading assets to the release, which could be used by GitHub Actions for additional uses, for example the [@actions/upload-release-asset](https://github.com/actions/upload-release-asset) GitHub Action
+
+### Environment variables
+- GITHUB_TOKEN
+  - The github auth token (mandatory)
+- TAG_NAME
+  - The name of the tag a release is searched for. If not set context.ref will be used instead.
 
 ### Example workflow - update a release
 
