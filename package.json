@@ -43,7 +43,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^2.7.0",
     "eslint-plugin-react": "^7.12.4",
-    "eslint-plugin-github": "^4.1.1",
+    "eslint-plugin-github": "^4.1.5",
     "eslint-plugin-jest": "^23.20.0",
     "prettier": "^1.16.4",
     "jest-circus": "^26.4.2",
