@@ -41,7 +41,7 @@
     "eslint-config-prettier": "^3.6.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-prettier": "^2.7.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-github": "^4.1.1",
     "eslint-plugin-jest": "^23.20.0",
