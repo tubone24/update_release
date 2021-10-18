@@ -12,14 +12,14 @@ export const run = async (): Promise<void> => {
 
     let getReleaseResponse
     if (process.env.RELEASE_ID) {
-      info( `Updating release with id : '${process.env.RELEASE_ID}'`)
+      info(`Updating release with id : '${process.env.RELEASE_ID}'`)
       getReleaseResponse = await github.repos.getRelease({
         owner,
         release_id: parseInt(process.env.RELEASE_ID),
         repo
       })
     } else {
-      info( `Updating release with tag : '${tag}'`)
+      info(`Updating release with tag : '${tag}'`)
       getReleaseResponse = await github.repos.getReleaseByTag({
         owner,
         repo,

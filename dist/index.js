@@ -53,13 +53,15 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
         const tag = tagName.replace('refs/tags/', '');
         let getReleaseResponse;
         if (process.env.RELEASE_ID) {
+            core_1.info(`Updating release with id : '${process.env.RELEASE_ID}'`);
             getReleaseResponse = yield github.repos.getRelease({
-                owner: owner,
+                owner,
                 release_id: parseInt(process.env.RELEASE_ID),
-                repo: repo
+                repo
             });
         }
         else {
+            core_1.info(`Updating release with tag : '${tag}'`);
             getReleaseResponse = yield github.repos.getReleaseByTag({
                 owner,
                 repo,
