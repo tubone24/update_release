@@ -9,11 +9,21 @@ export const run = async (): Promise<void> => {
     const repo = process.env.RELEASE_REPO ?? context.repo.repo
     const tagName = process.env.TAG_NAME ?? context.ref
     const tag = tagName.replace('refs/tags/', '')
-    const getReleaseResponse = await github.repos.getReleaseByTag({
-      owner,
-      repo,
-      tag
-    })
+
+    let getReleaseResponse
+    if (process.env.RELEASE_ID) {
+      getReleaseResponse = await github.repos.getRelease({
+        owner,
+        release_id: parseInt(process.env.RELEASE_ID),
+        repo
+      })
+    } else {
+      getReleaseResponse = await github.repos.getReleaseByTag({
+        owner,
+        repo,
+        tag
+      })
+    }
 
     const {
       data: {

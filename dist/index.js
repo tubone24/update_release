@@ -51,11 +51,21 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
         const repo = (_b = process.env.RELEASE_REPO) !== null && _b !== void 0 ? _b : github_1.context.repo.repo;
         const tagName = (_c = process.env.TAG_NAME) !== null && _c !== void 0 ? _c : github_1.context.ref;
         const tag = tagName.replace('refs/tags/', '');
-        const getReleaseResponse = yield github.repos.getReleaseByTag({
-            owner,
-            repo,
-            tag
-        });
+        let getReleaseResponse;
+        if (process.env.RELEASE_ID) {
+            getReleaseResponse = yield github.repos.getRelease({
+                owner: owner,
+                release_id: parseInt(process.env.RELEASE_ID),
+                repo: repo
+            });
+        }
+        else {
+            getReleaseResponse = yield github.repos.getReleaseByTag({
+                owner,
+                repo,
+                tag
+            });
+        }
         const { data: { id: oldReleaseId, html_url: oldHtmlUrl, upload_url: oldUploadUrl, body: oldBody, draft: oldDraft, name: oldName, prerelease: oldPrerelease } } = getReleaseResponse;
         core_1.info(`Got release info: '${oldReleaseId}', ${oldName}, '${oldHtmlUrl}', '${oldUploadUrl},'`);
         core_1.info(`Body: ${oldBody}`);
