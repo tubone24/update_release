@@ -5,7 +5,8 @@ import {readFileSync} from 'fs'
 export const run = async (): Promise<void> => {
   try {
     const github = new GitHub(process.env.GITHUB_TOKEN)
-    const {owner, repo} = context.repo
+    const owner = process.env.RELEASE_OWNER ?? context.repo.owner
+    const repo = process.env.RELEASE_REPO ?? context.repo.repo
     const tagName = process.env.TAG_NAME ?? context.ref
     const tag = tagName.replace('refs/tags/', '')
     const getReleaseResponse = await github.repos.getReleaseByTag({
