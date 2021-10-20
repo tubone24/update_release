@@ -1,11 +1,7 @@
 name: Test
 
 on:
-  push:
-    branches:
-      - '*'
-    tags-ignore:
-      - 'v*' # version Tag push use release workflow
+  push
 
 jobs:
   test:
