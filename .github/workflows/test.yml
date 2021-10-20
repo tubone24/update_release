@@ -1,0 +1,22 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - 'v*' # version Tag push use release workflow
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install Dependencies
+        run: npm install
+      - name: Test and Build
+        run: npm run all
+      - name: Use Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
