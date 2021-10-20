@@ -5,14 +5,27 @@ import {readFileSync} from 'fs'
 export const run = async (): Promise<void> => {
   try {
     const github = new GitHub(process.env.GITHUB_TOKEN)
-    const {owner, repo} = context.repo
+    const owner = process.env.RELEASE_OWNER ?? context.repo.owner
+    const repo = process.env.RELEASE_REPO ?? context.repo.repo
     const tagName = process.env.TAG_NAME ?? context.ref
     const tag = tagName.replace('refs/tags/', '')
-    const getReleaseResponse = await github.repos.getReleaseByTag({
-      owner,
-      repo,
-      tag
-    })
+
+    let getReleaseResponse
+    if (process.env.RELEASE_ID) {
+      info(`Updating release with id : '${process.env.RELEASE_ID}'`)
+      getReleaseResponse = await github.repos.getRelease({
+        owner,
+        release_id: parseInt(process.env.RELEASE_ID),
+        repo
+      })
+    } else {
+      info(`Updating release with tag : '${tag}'`)
+      getReleaseResponse = await github.repos.getReleaseByTag({
+        owner,
+        repo,
+        tag
+      })
+    }
 
     const {
       data: {
