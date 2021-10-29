@@ -1,6 +1,6 @@
 # update_release (GitHub Release API)
 
-[![Release Version](https://raw.githubusercontent.com/tubone24/update_release/master/.github/badges/release.svg)](https://github.com/tubone24/update_release/releases/latest)
+[![Release Version](https://release-badges-generator.vercel.app/api/releases.svg?user=tubone24&repo=update_release&gradient=ff6600,ffe500)](https://github.com/tubone24/update_release/releases/latest)
 [![Actions Status](https://github.com/tubone24/update_release/workflows/Test%20and%20Build/badge.svg)](https://github.com/tubone24/update_release/actions)
 [![Coverage Status](https://coveralls.io/repos/github/tubone24/update_release/badge.svg?branch=master)](https://coveralls.io/github/tubone24/update_release?branch=master)
 [![license](https://img.shields.io/github/license/tubone24/update_release.svg)](LICENSE)
