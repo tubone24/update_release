@@ -3,7 +3,7 @@ name: Test and Build
 on:
   push:
     branches:
-      - '*'
+      - 'master'
     tags-ignore:
       - 'v*' # version Tag push use release workflow
 
@@ -47,5 +47,5 @@ jobs:
             exit 0
           fi
           git commit -am 'GitHub Actions commit' --allow-empty
-          git push -f origin master
+          git push origin master
          
