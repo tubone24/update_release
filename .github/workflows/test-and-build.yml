@@ -30,13 +30,6 @@ jobs:
         id: get_version
         run: |
           echo ::set-output name=VERSION::$(git describe --tags $(git rev-list --tags --max-count=1))
-      - name: Create Badge
-        uses: emibcn/badge-action@v1
-        with:
-          label: 'Release'
-          status: ${{ steps.get_version.outputs.VERSION }}
-          color: 'blue,555,daf'
-          path: '.github/badges/release.svg'
       - name: Git push, tag, upload assets
         run: |
           git checkout master
