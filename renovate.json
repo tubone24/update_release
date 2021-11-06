@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "branchPrefix": "renovate-",
+  "prHourlyLimit": 12,
+  "timezone": "Asia/Tokyo",
+  "labels": ["renovate"],
+  "packageRules": [
+    {
+      "depTypeList": ["devDependencies"],
+      "automerge": true
+    }
+  ],
+  "minor": { "automerge": true },
+  "patch": { "automerge": true },
+  "schedule": [
+    "after 0am and before 6am"
+  ],
+  "dependencyDashboard": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  }
+}
