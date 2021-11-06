@@ -15,7 +15,7 @@
   "minor": { "automerge": true },
   "patch": { "automerge": true },
   "schedule": [
-    "after 0am and before 6am"
+    "after 11pm and before 6am"
   ],
   "dependencyDashboard": true,
   "lockFileMaintenance": {
