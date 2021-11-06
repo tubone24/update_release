@@ -48,6 +48,6 @@
     "prettier": "1.19.1",
     "jest-circus": "26.6.3",
     "ts-jest": "24.3.0",
-    "typescript": "4.1.5"
+    "typescript": "4.4.4"
   }
 }
