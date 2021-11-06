@@ -38,7 +38,7 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
         const tag = tagName.replace('refs/tags/', '');
         let getReleaseResponse;
         if (process.env.RELEASE_ID) {
-            core_1.info(`Updating release with id : '${process.env.RELEASE_ID}'`);
+            (0, core_1.info)(`Updating release with id : '${process.env.RELEASE_ID}'`);
             getReleaseResponse = yield github.repos.getRelease({
                 owner,
                 release_id: parseInt(process.env.RELEASE_ID),
@@ -46,7 +46,7 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
             });
         }
         else {
-            core_1.info(`Updating release with tag : '${tag}'`);
+            (0, core_1.info)(`Updating release with tag : '${tag}'`);
             getReleaseResponse = yield github.repos.getReleaseByTag({
                 owner,
                 repo,
@@ -54,22 +54,22 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
             });
         }
         const { data: { id: oldReleaseId, html_url: oldHtmlUrl, upload_url: oldUploadUrl, body: oldBody, draft: oldDraft, name: oldName, prerelease: oldPrerelease } } = getReleaseResponse;
-        core_1.info(`Got release info: '${oldReleaseId}', ${oldName}, '${oldHtmlUrl}', '${oldUploadUrl},'`);
-        core_1.info(`Body: ${oldBody}`);
-        core_1.info(`Draft: ${oldDraft}, Prerelease: ${oldPrerelease}`);
-        const newReleaseName = core_1.getInput('release_name', { required: false });
-        const newBody = core_1.getInput('body', { required: false });
-        const newDraft = core_1.getInput('draft', { required: false });
-        const newPrerelease = core_1.getInput('prerelease', { required: false });
-        const isAppendBody = core_1.getInput('is_append_body', { required: false }) === 'true';
-        const newBodyPath = core_1.getInput('body_path', { required: false });
+        (0, core_1.info)(`Got release info: '${oldReleaseId}', ${oldName}, '${oldHtmlUrl}', '${oldUploadUrl},'`);
+        (0, core_1.info)(`Body: ${oldBody}`);
+        (0, core_1.info)(`Draft: ${oldDraft}, Prerelease: ${oldPrerelease}`);
+        const newReleaseName = (0, core_1.getInput)('release_name', { required: false });
+        const newBody = (0, core_1.getInput)('body', { required: false });
+        const newDraft = (0, core_1.getInput)('draft', { required: false });
+        const newPrerelease = (0, core_1.getInput)('prerelease', { required: false });
+        const isAppendBody = (0, core_1.getInput)('is_append_body', { required: false }) === 'true';
+        const newBodyPath = (0, core_1.getInput)('body_path', { required: false });
         let bodyFileContent = null;
         if (newBodyPath !== '' && !!newBodyPath) {
             try {
-                bodyFileContent = fs_1.readFileSync(newBodyPath, { encoding: 'utf8' });
+                bodyFileContent = (0, fs_1.readFileSync)(newBodyPath, { encoding: 'utf8' });
             }
             catch (error) {
-                core_1.setFailed(error.message);
+                (0, core_1.setFailed)(error.message);
                 return;
             }
             if (isAppendBody) {
@@ -117,16 +117,16 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
             prerelease
         });
         const { data: { id: updatedReleaseId, body: updatedBody, upload_url: updatedUploadUrl, html_url: updatedHtmlUrl, name: updatedReleaseName, published_at: updatedPublishAt } } = updateReleaseResponse;
-        core_1.setOutput('id', updatedReleaseId.toString());
-        core_1.setOutput('html_url', updatedHtmlUrl);
-        core_1.setOutput('upload_url', updatedUploadUrl);
-        core_1.setOutput('name', updatedReleaseName);
-        core_1.setOutput('body', updatedBody);
-        core_1.setOutput('published_at', updatedPublishAt);
-        core_1.setOutput('tag_name', tag);
+        (0, core_1.setOutput)('id', updatedReleaseId.toString());
+        (0, core_1.setOutput)('html_url', updatedHtmlUrl);
+        (0, core_1.setOutput)('upload_url', updatedUploadUrl);
+        (0, core_1.setOutput)('name', updatedReleaseName);
+        (0, core_1.setOutput)('body', updatedBody);
+        (0, core_1.setOutput)('published_at', updatedPublishAt);
+        (0, core_1.setOutput)('tag_name', tag);
     }
     catch (error) {
-        core_1.setFailed(error.message);
+        (0, core_1.setFailed)(error.message);
     }
 });
 exports.run = run;
@@ -26454,7 +26454,7 @@ var exports = __webpack_exports__;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const update_release_1 = __nccwpck_require__(1003);
 if (require.main === require.cache[eval('__filename')]) {
-    update_release_1.run();
+    (0, update_release_1.run)();
 }
 
 })();
