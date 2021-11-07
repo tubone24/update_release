@@ -1,16 +1,20 @@
 import {getInput, setFailed, setOutput, info} from '@actions/core'
 import {GitHub, context} from '@actions/github'
+import {Octokit} from '@octokit/rest'
 import {readFileSync} from 'fs'
 
 export const run = async (): Promise<void> => {
   try {
+    if (process.env.GITHUB_TOKEN === undefined) {
+      throw new Error('need to set GITHUB_TOKEN')
+    }
     const github = new GitHub(process.env.GITHUB_TOKEN)
     const owner = process.env.RELEASE_OWNER ?? context.repo.owner
     const repo = process.env.RELEASE_REPO ?? context.repo.repo
     const tagName = process.env.TAG_NAME ?? context.ref
     const tag = tagName.replace('refs/tags/', '')
 
-    let getReleaseResponse
+    let getReleaseResponse: Octokit.Response<Octokit.ReposGetReleaseResponse>
     if (process.env.RELEASE_ID) {
       info(`Updating release with id : '${process.env.RELEASE_ID}'`)
       getReleaseResponse = await github.repos.getRelease({
@@ -53,13 +57,17 @@ export const run = async (): Promise<void> => {
       getInput('is_append_body', {required: false}) === 'true'
     const newBodyPath = getInput('body_path', {required: false})
 
-    let bodyFileContent = null
+    let bodyFileContent: string | null = null
     if (newBodyPath !== '' && !!newBodyPath) {
       try {
         bodyFileContent = readFileSync(newBodyPath, {encoding: 'utf8'})
       } catch (error) {
-        setFailed(error.message)
-        return
+        if (error instanceof Error) {
+          setFailed(error.message)
+          return
+        } else {
+          throw new Error('unknown error')
+        }
       }
       if (isAppendBody) {
         bodyFileContent = `${oldBody}\n${bodyFileContent}`
@@ -121,6 +129,12 @@ export const run = async (): Promise<void> => {
     setOutput('published_at', updatedPublishAt)
     setOutput('tag_name', tag)
   } catch (error) {
-    setFailed(error.message)
+    if (error instanceof Error) {
+      setFailed(error.message)
+      return
+    } else {
+      setFailed('unknown error')
+      return
+    }
   }
 }

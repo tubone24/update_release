@@ -1,6 +1,6 @@
 {
   "name": "update_release",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "description": "Update release",
   "main": "lib/main.js",
   "scripts": {
@@ -27,9 +27,9 @@
   },
   "homepage": "https://github.com/tubone24/update_release#readme",
   "dependencies": {
-    "@actions/core": "^1.6.0",
-    "@actions/github": "^2.2.0",
-    "@actions/exec": "^1.0.4"
+    "@actions/core": "1.6.0",
+    "@actions/github": "2.2.0",
+    "@actions/exec": "1.0.4"
   },
   "devDependencies": {
     "@types/jest": "27.0.2",
