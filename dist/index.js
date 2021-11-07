@@ -31,6 +31,9 @@ const fs_1 = __nccwpck_require__(5747);
 const run = () => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
     try {
+        if (process.env.GITHUB_TOKEN === undefined) {
+            throw new Error('need to set GITHUB_TOKEN');
+        }
         const github = new github_1.GitHub(process.env.GITHUB_TOKEN);
         const owner = (_a = process.env.RELEASE_OWNER) !== null && _a !== void 0 ? _a : github_1.context.repo.owner;
         const repo = (_b = process.env.RELEASE_REPO) !== null && _b !== void 0 ? _b : github_1.context.repo.repo;
@@ -69,8 +72,13 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
                 bodyFileContent = (0, fs_1.readFileSync)(newBodyPath, { encoding: 'utf8' });
             }
             catch (error) {
-                (0, core_1.setFailed)(error.message);
-                return;
+                if (error instanceof Error) {
+                    (0, core_1.setFailed)(error.message);
+                    return;
+                }
+                else {
+                    throw new Error('unknown error');
+                }
             }
             if (isAppendBody) {
                 bodyFileContent = `${oldBody}\n${bodyFileContent}`;
@@ -126,7 +134,14 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
         (0, core_1.setOutput)('tag_name', tag);
     }
     catch (error) {
-        (0, core_1.setFailed)(error.message);
+        if (error instanceof Error) {
+            (0, core_1.setFailed)(error.message);
+            return;
+        }
+        else {
+            (0, core_1.setFailed)('unknown error');
+            return;
+        }
     }
 });
 exports.run = run;
