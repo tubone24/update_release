@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/tubone24/update_release#readme",
   "dependencies": {
-    "@actions/core": "1.6.0",
+    "@actions/core": "1.7.0",
     "@actions/github": "2.2.0",
     "@actions/exec": "1.1.1"
   },
